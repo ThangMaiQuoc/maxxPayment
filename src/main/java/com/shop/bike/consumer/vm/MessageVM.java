@@ -1,10 +1,7 @@
 package com.shop.bike.consumer.vm;
 
-import com.shop.bike.entity.enumeration.DiscountType;
 import lombok.Data;
 
-import javax.persistence.Column;
-import java.math.BigDecimal;
 import java.time.Instant;
 
 @Data

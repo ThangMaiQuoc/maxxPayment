@@ -1,11 +1,9 @@
 package com.shop.bike.entity;
 
-import com.shop.bike.entity.enumeration.AdminRole;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +46,5 @@ public class User extends BaseEntity{
 	@Column(name = "avatar")
 	private String avatar;
 	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "admin_role")
-	private AdminRole adminRole;
 	
 }
