@@ -15,7 +15,7 @@ public class RequestBossPaymentDTO {
 
     private String subject = "Product Title";
 
-    private String wayCode = "PH_SM";
+    private String wayCode = "SM_GCash";
 
     private String reqTime = "1725471225207";
 
@@ -23,7 +23,7 @@ public class RequestBossPaymentDTO {
 
     private String version = "1.0";
 
-    private String appId = "66bca66fe4b0fb8d90a008f9";
+    private String appId = "67056801e4b06e0a57de66b2";
 
     private String notifyUrl = "https://www.bosspay.com/notify.html";
 
@@ -31,5 +31,5 @@ public class RequestBossPaymentDTO {
 
     private String currency = "PHP";
 
-    private String mchNo = "M1723639407";
+    private String mchNo = "M1728407553";
 }

@@ -1,6 +1,7 @@
 package com.shop.bike.consumer.rest;
 
 import com.shop.bike.consumer.dto.RequestBossPaymentDTO;
+import com.shop.bike.consumer.dto.RequestTransferBossPaymentDTO;
 import com.shop.bike.entity.enumeration.PaymentParam;
 import com.shop.bike.service.dto.PaymentParamDTO;
 import com.shop.bike.utils.JsonConverter;
@@ -74,13 +75,49 @@ public class MaxxPaymentConsumerResource {
 		signMap.put("currency", requestBossPaymentDTO.getCurrency());
 		signMap.put("mchNo", requestBossPaymentDTO.getMchNo());
 
-		String privateKey = "7pZqH254we5N679C344EKkLNd3FzMIfkSN8Bib4wvuqHF8ism6Xg4Yb39UpsfilKF1jl91gyLgRtCHiz96DIqqJSdTGZNv2F4ixA0V43RtXNJme1qUFLhacjPXvooJAa";
+		String privateKey = "vvzOApCF04jgEkwBgAr2hqNzs0p7QQV8U3KeCobNUAuWiQ6xiwzlgWmTbR7kdeerBUH6eupJYq3SOJKN5jd7t1zPpUUGsUz4hey0SaeZzf5rBClje6BAbHlDj5JGCz1l";
 		String sign = generateSign(signMap, privateKey);
 		Map<String,String> signStringMap = new HashMap<>();
 		signStringMap.put("sign",sign);
 		signStringMap.putAll(signMap);
 		return ResponseEntity.ok(signStringMap);
 	}
+
+	@PostMapping("/public/transfer/get-sign")
+	private ResponseEntity<Map<String, String>> responseSignForTransfer(@RequestBody RequestTransferBossPaymentDTO requestTransferBossPaymentDTO) {
+		Map<String, String> signMap = new HashMap<>();
+
+		// Put all values from RequestTransferBossPaymentDTO into the signMap
+		signMap.put("mchNo", requestTransferBossPaymentDTO.getMchNo());
+		signMap.put("appId", requestTransferBossPaymentDTO.getAppId());
+		signMap.put("mchOrderNo", requestTransferBossPaymentDTO.getMchOrderNo());
+		signMap.put("wayCode", requestTransferBossPaymentDTO.getWayCode());
+		signMap.put("entryType", requestTransferBossPaymentDTO.getEntryType());
+		signMap.put("amount", String.valueOf(requestTransferBossPaymentDTO.getAmount()));
+		signMap.put("currency", requestTransferBossPaymentDTO.getCurrency());
+		signMap.put("accountNo", requestTransferBossPaymentDTO.getAccountNo());
+		signMap.put("accountName", requestTransferBossPaymentDTO.getAccountName());
+		signMap.put("bankName", requestTransferBossPaymentDTO.getBankName());
+		signMap.put("clientIp", requestTransferBossPaymentDTO.getClientIp());
+		signMap.put("transferDesc", requestTransferBossPaymentDTO.getTransferDesc());
+		signMap.put("notifyUrl", requestTransferBossPaymentDTO.getNotifyUrl());
+		signMap.put("extParam", requestTransferBossPaymentDTO.getExtParam());
+		signMap.put("reqTime", requestTransferBossPaymentDTO.getReqTime());
+		signMap.put("version", requestTransferBossPaymentDTO.getVersion());
+		signMap.put("signType", requestTransferBossPaymentDTO.getSignType());
+
+		// Use private key to generate the sign
+		String privateKey = "vvzOApCF04jgEkwBgAr2hqNzs0p7QQV8U3KeCobNUAuWiQ6xiwzlgWmTbR7kdeerBUH6eupJYq3SOJKN5jd7t1zPpUUGsUz4hey0SaeZzf5rBClje6BAbHlDj5JGCz1l";
+		String sign = generateSign(signMap, privateKey);
+
+		// Add the generated sign to the response map
+		Map<String, String> signStringMap = new HashMap<>();
+		signStringMap.put("sign", sign);
+		signStringMap.putAll(signMap);
+
+		return ResponseEntity.ok(signStringMap);
+	}
+
 
 	public static String generateSign(Map<String, String> params, String privateKey) {
 		// step 1: remove value null or empty
